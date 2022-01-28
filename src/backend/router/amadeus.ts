@@ -1,9 +1,8 @@
-import { appRouter } from "@/pages/api/trpc/[trpc]";
+import { createRouter } from "@/pages/api/trpc/[trpc]";
 import { amadeus } from "@/utils/amadeus";
-import * as trpc from "@trpc/server";
 import { z } from "zod";
 
-export const amadeusRouter = trpc.router().query("get-travel-restrictions", {
+export const amadeusRouter = createRouter().query("get-travel-restrictions", {
   input: z.object({
     countryCode: z.string(),
   }),

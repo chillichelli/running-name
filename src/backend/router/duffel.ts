@@ -1,10 +1,8 @@
-import { appRouter } from "@/pages/api/trpc/[trpc]";
-import { amadeus } from "@/utils/amadeus";
+import { createRouter } from "@/pages/api/trpc/[trpc]";
 import { duffel } from "@/utils/duffel";
-import * as trpc from "@trpc/server";
 import { z } from "zod";
 
-export const duffelRouter = trpc.router().query("get-flight-offers", {
+export const duffelRouter = createRouter().query("get-flight-offers", {
   input: z.object({
     return_offers: z.boolean(),
     slices: z.array(
@@ -36,18 +34,3 @@ export const duffelRouter = trpc.router().query("get-flight-offers", {
     return flightOffers.data;
   },
 });
-// .query("get-travel-restrictions", {
-//   input: z.object({
-//     countryCode: z.string(),
-//   }),
-//   async resolve({ input }) {
-//     const restrictions = await amadeus.client.get(
-//       "/v1/duty-of-care/diseases/covid19-area-report",
-//       {
-//         ...input,
-//       }
-//     );
-//     console.log(restrictions.result);
-//     return restrictions.result;
-//   },
-// });

@@ -7,11 +7,11 @@
 //   createContext: () => null,
 // });
 
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
 import * as trpc from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 import superjson from "superjson";
-import { duffelRouter } from "@/backend/router";
+import { duffelRouter } from "@/backend/router/duffel";
 import { amadeusRouter } from "@/backend/router/amadeus";
 
 // const prisma = new PrismaClient();
