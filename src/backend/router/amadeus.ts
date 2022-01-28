@@ -14,6 +14,6 @@ export const amadeusRouter = createRouter().query("get-travel-restrictions", {
       }
     );
     console.log(restrictions.result);
-    return restrictions.result;
+    return restrictions.result.data;
   },
 });
