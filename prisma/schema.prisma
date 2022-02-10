@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model Transaction {
+  id                String     @id @default(cuid())
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  grandTotal        Decimal
+  paymentSuccessful Boolean    @default(false)
+  user              User?      @relation(fields: [userId], references: [id])
+  userId            String?
+  itinerary         Itinerary? @relation(fields: [itineraryId], references: [id])
+  itineraryId       String?
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  givenName    String?
+  familyName   String?
+  postalCode   String?
+  address      String?
+  city         String?
+  country      String?
+  countryCode  String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  transactions Transaction[]
+  itineraries  Itinerary[]
+}
+
+model Itinerary {
+  id                   String                   @id @default(cuid())
+  departure            FlightDepartureSegment[]
+  departureId          String?
+  arrival              FlightArrivalSegment[]
+  arrivalId            String?
+  oneWay               Boolean                  @default(false)
+  duration             String
+  carrierCode          String
+  carrierAircraftType  String
+  operatingCarrierCode String
+  User                 User?                    @relation(fields: [userId], references: [id])
+  userId               String?
+  Transaction          Transaction[]
+}
+
+model FlightDepartureSegment {
+  id                String     @id @default(cuid())
+  departureAt       DateTime
+  departureIataCode String
+  departureTerminal String
+  Itinerary         Itinerary? @relation(fields: [itineraryId], references: [id])
+  itineraryId       String?
+}
+
+model FlightArrivalSegment {
+  id              String     @id @default(cuid())
+  arrivalAt       DateTime
+  arrivalIataCode String
+  arrivalTerminal String
+  Itinerary       Itinerary? @relation(fields: [itineraryId], references: [id])
+  itineraryId     String?
+}

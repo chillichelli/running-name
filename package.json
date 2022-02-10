@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@duffel/api": "^1.7.6",
+    "@heroicons/react": "^1.0.5",
     "@prisma/client": "^3.8.1",
     "@trpc/client": "^9.17.1",
     "@trpc/next": "^9.17.1",
