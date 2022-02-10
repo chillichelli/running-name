@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import SearchFlight from "@/components/SearchFlight";
+import SignUp from "@/components/SearchFlightMUI";
+import SearchFlight from "@/components/SearchFlightRHF";
 import Head from "next/head";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       {/* <Header /> */}
       <Hero />
       <SearchFlight />
+      <SignUp />
     </div>
   );
 }

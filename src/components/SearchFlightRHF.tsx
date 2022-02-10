@@ -27,6 +27,8 @@ const schema = z.object({
     .number({
       invalid_type_error: "Number of adults must be an integer",
     })
+    .positive()
+    .int()
     .default(1),
 });
 
@@ -48,25 +50,26 @@ function SearchFlight() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <label>
-        <input name='origin' ref={register} placeholder='Origin' />
+        <input {...register("origin")} placeholder='Origin' />
         <span>{errors.origin?.message}</span>
       </label>
       <label>
-        <input name='destination' ref={register} placeholder='Destination' />
+        <input {...register("destination")} placeholder='Destination' />
         <span>{errors.destination?.message}</span>
       </label>
       <label>
-        <input name='departureDate' ref={register} />
+        <input {...register("departureDate")} />
         <span>{errors.departureDate?.message}</span>
       </label>
       <label>
-        <input name='returnDate' ref={register} />
+        <input {...register("returnDate")} />
         <span>{errors.returnDate?.message}</span>
       </label>
       <label>
-        <input name='nAdults' ref={register} placeholder='1' />
+        <input {...register("nAdults")} placeholder='1' />
         <span>{errors.nAdults?.message}</span>
       </label>
+      <input type='submit' id='submit' />
     </form>
   );
 }
