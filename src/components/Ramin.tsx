@@ -1,94 +1,70 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Stack from "@mui/material/Stack";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import TimePicker from "@mui/lab/TimePicker";
-import DateTimePicker from "@mui/lab/DateTimePicker";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
-import MobileDatePicker from "@mui/lab/MobileDatePicker";
-import InputUnstyled from "@mui/base/InputUnstyled";
-import { trpc } from "@/utils/trpc";
+import * as React from 'react'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import Link from '@mui/material/Link'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import Stack from '@mui/material/Stack'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
+import { trpc } from '@/utils/trpc'
+import { TypographyProps } from '@mui/system'
+import { useCallback } from 'react'
+const { useContext } = trpc
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+const theme = createTheme()
 
-const theme = createTheme();
+const Copyright = (props: TypographyProps) => (
+  <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    {'Copyright © '}
+    <Link color="inherit" href="https://mui.com/">
+      Your Website
+    </Link>{' '}
+    {new Date().getFullYear()}
+    {'.'}
+  </Typography>
+)
 
-export default function SearchFlight() {
-  const [date, setDate] = React.useState<Date | null>(new Date(Date.now()));
-  const handleChange = (newDate: Date | null) => {
-    setDate(newDate);
-  };
+const SearchFlight = () => {
+  const { client } = useContext()
+  const [date, setDate] = React.useState<Date | null>(new Date(Date.now()))
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log(trpc);
+  const handleChange = useCallback((newDate: Date | null) => {
+    setDate(newDate)
+  }, [])
 
-    // API call should be dynamic based on form input
-    // const locations = trpc.useQuery(["amadeus.get-location", "LON"]);
-    // console.log(locations);
+  const handleSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      const data = new FormData(event.currentTarget)
 
-    return <></>;
-  };
+      const locations = client.query('amadeus.get-location', 'LON')
+      console.log(locations)
+    },
+    [client]
+  )
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            // marginTop: 3,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography component='h1' variant='h3'>
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Typography component="h1" variant="h3">
             Send me away!
           </Typography>
-          <Box
-            component='form'
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid
-              container
-              spacing={2}
-              alignItems='center'
-              justifyContent='center'
-            >
+          <Box component="form" noValidate onSubmit={handleSubmit} mt={3}>
+            <Grid container spacing={2} alignItems="center" justifyContent="center">
               <Grid item xs={12} sm={6}>
                 <TextField
-                  name='origin'
+                  name="origin"
                   fullWidth
-                  id='origin'
-                  label='Origin'
+                  id="origin"
+                  label="Origin"
                   autoFocus
                   InputLabelProps={{
                     shrink: false,
@@ -97,10 +73,10 @@ export default function SearchFlight() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  name='destination'
+                  name="destination"
                   fullWidth
-                  id='destination'
-                  label='Destination'
+                  id="destination"
+                  label="Destination"
                   autoFocus
                   InputLabelProps={{
                     shrink: false,
@@ -109,10 +85,10 @@ export default function SearchFlight() {
               </Grid>
               <Grid item xs={12} sm={8}>
                 <TextField
-                  id='number-adults'
-                  label='Adults'
-                  name='numberAdults'
-                  type='number'
+                  id="number-adults"
+                  label="Adults"
+                  name="numberAdults"
+                  type="number"
                   defaultValue={1}
                   InputProps={{ inputProps: { min: 1 } }}
                   InputLabelProps={{
@@ -126,9 +102,9 @@ export default function SearchFlight() {
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <Stack spacing={3}>
                     <DesktopDatePicker
-                      label='Departure Date'
-                      className='departureDate'
-                      inputFormat='dd/MM/yyyy'
+                      label="Departure Date"
+                      className="departureDate"
+                      inputFormat="dd/MM/yyyy"
                       value={date}
                       onChange={handleChange}
                       renderInput={(params) => <TextField {...params} />}
@@ -140,9 +116,9 @@ export default function SearchFlight() {
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <Stack spacing={3}>
                     <DesktopDatePicker
-                      label='Return Date'
-                      className='returnDate'
-                      inputFormat='dd/MM/yyyy'
+                      label="Return Date"
+                      className="returnDate"
+                      inputFormat="dd/MM/yyyy"
                       value={date}
                       onChange={handleChange}
                       renderInput={(params) => <TextField {...params} />}
@@ -151,17 +127,17 @@ export default function SearchFlight() {
                 </LocalizationProvider>
               </Grid>
             </Grid>
-            <Button
-              type='submit'
-              fullWidth
-              variant='outlined'
-              sx={{ mt: 3, mb: 2, p: 1 }}
+            <Box
+              mt={3}
+              mb={2}
+              p={1}
+              component={(props) => <Button {...props} type="submit" fullWidth variant="outlined" />}
             >
               Search Flights
-            </Button>
-            <Grid container justifyContent='flex-end'>
+            </Box>
+            <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href='#' variant='body2'>
+                <Link href="#" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -171,5 +147,7 @@ export default function SearchFlight() {
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
-  );
+  )
 }
+
+export default SearchFlight
