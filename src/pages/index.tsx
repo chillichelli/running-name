@@ -8,6 +8,11 @@ import { trpc } from "@/utils/trpc";
 import Head from "next/head";
 
 export default function Home() {
+  // const { data, isLoading } = trpc.useQuery(["amadeus.get-location", "LON"]);
+  // if (data) {
+  //   console.log(data);
+  // }
+
   return (
     <div className='max-w-screen-2xl mx-auto'>
       {/* <Head>

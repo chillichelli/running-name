@@ -24,6 +24,7 @@ export const amadeusRouter = createRouter()
       // Airports and City Search (autocomplete)
       // Find all the cities and airports starting
       // with a specific string.
+      console.log(input);
       const locations = getLocations(input);
       console.log(locations);
       return locations;
