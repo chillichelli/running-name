@@ -39,11 +39,11 @@ const SearchFlight = () => {
   }, [])
 
   const handleSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
+    async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
       const data = new FormData(event.currentTarget)
 
-      const locations = client.query('amadeus.get-location', 'LON')
+      const locations = await client.query('amadeus.get-location', 'LON')
       console.log(locations)
     },
     [client]
