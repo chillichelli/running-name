@@ -38,6 +38,7 @@ function SearchFlight() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<Search>({
     resolver: zodResolver(schema),
@@ -49,27 +50,31 @@ function SearchFlight() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label>
+      <label className='flex flex-col'>
         <input {...register("origin")} placeholder='Origin' />
-        <span>{errors.origin?.message}</span>
+        <span className='text-red-900'>{errors.origin?.message}</span>
       </label>
-      <label>
-        <input {...register("destination")} placeholder='Destination' />
-        <span>{errors.destination?.message}</span>
+      <label className='flex flex-col '>
+        <input
+          className='border-2 border-black'
+          {...register("destination")}
+          placeholder='Destination'
+        />
+        <span className='text-red-900'>{errors.destination?.message}</span>
       </label>
-      <label>
+      <label className='flex flex-col'>
         <input {...register("departureDate")} />
-        <span>{errors.departureDate?.message}</span>
+        <span className='text-red-900'>{errors.departureDate?.message}</span>
       </label>
-      <label>
+      <label className='flex flex-col'>
         <input {...register("returnDate")} />
-        <span>{errors.returnDate?.message}</span>
+        <span className='text-red-900'>{errors.returnDate?.message}</span>
       </label>
-      <label>
+      <label className='flex flex-col'>
         <input {...register("nAdults")} placeholder='1' />
-        <span>{errors.nAdults?.message}</span>
+        <span className='text-red-900'>{errors.nAdults?.message}</span>
       </label>
-      <input type='submit' id='submit' />
+      <input className='border-2 border-black' type='submit' id='submit' />
     </form>
   );
 }

@@ -1,20 +1,25 @@
+import AddButton from "@/components/AddButton";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import SignUp from "@/components/SearchFlightMUI";
-import SearchFlight from "@/components/SearchFlightRHF";
+import SearchFlight from "@/components/SearchFlightMUI";
+// import SearchFlight from "@/components/SearchFlight";
+import SubtractButton from "@/components/SubtractButton";
+import { trpc } from "@/utils/trpc";
 import Head from "next/head";
 
 export default function Home() {
   return (
     <div className='max-w-screen-2xl mx-auto'>
-      <Head>
+      {/* <Head>
         <title>Skyscanner 2.0</title>
         <link rel='icon' href='/favicon.ico' />
-      </Head>
-      {/* <Header /> */}
+      </Head> */}
       <Hero />
+      {/* <SearchFlight /> */}
       <SearchFlight />
-      <SignUp />
+      {/* <AddButton /> */}
+      {/* <SubtractButton /> */}
+      {/* <SearchFlight /> */}
     </div>
   );
 }
