@@ -15,16 +15,13 @@ import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import { trpc } from "@/utils/trpc";
 import { TypographyProps } from "@mui/system";
 import { useCallback } from "react";
-import { getLocations } from "@/utils/amadeus";
-
-const { useContext } = trpc;
 
 const theme = createTheme();
 
 const Copyright = (props: TypographyProps) => (
-  <Typography variant='body2' color='text.secondary' align='center' {...props}>
+  <Typography variant="body2" color="text.secondary" align="center" {...props}>
     {"Copyright © "}
-    <Link color='inherit' href='https://mui.com/'>
+    <Link color="inherit" href="https://mui.com/">
       Your Website
     </Link>{" "}
     {new Date().getFullYear()}
@@ -33,7 +30,7 @@ const Copyright = (props: TypographyProps) => (
 );
 
 const SearchFlight = () => {
-  const { client } = useContext();
+  const { client } = trpc.useContext();
   const [date, setDate] = React.useState<Date | null>(new Date(Date.now()));
 
   const handleChange = useCallback((newDate: Date | null) => {
@@ -52,25 +49,25 @@ const SearchFlight = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box display='flex' flexDirection='column' alignItems='center'>
-          <Typography component='h1' variant='h3'>
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Typography component="h1" variant="h3">
             Send me away!
           </Typography>
-          <Box component='form' noValidate onSubmit={handleSubmit} mt={3}>
+          <Box component="form" noValidate onSubmit={handleSubmit} mt={3}>
             <Grid
               container
               spacing={2}
-              alignItems='center'
-              justifyContent='center'
+              alignItems="center"
+              justifyContent="center"
             >
               <Grid item xs={12} sm={6}>
                 <TextField
-                  name='origin'
+                  name="origin"
                   fullWidth
-                  id='origin'
-                  label='Origin'
+                  id="origin"
+                  label="Origin"
                   autoFocus
                   InputLabelProps={{
                     shrink: false,
@@ -79,10 +76,10 @@ const SearchFlight = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  name='destination'
+                  name="destination"
                   fullWidth
-                  id='destination'
-                  label='Destination'
+                  id="destination"
+                  label="Destination"
                   autoFocus
                   InputLabelProps={{
                     shrink: false,
@@ -91,10 +88,10 @@ const SearchFlight = () => {
               </Grid>
               <Grid item xs={12} sm={8}>
                 <TextField
-                  id='number-adults'
-                  label='Adults'
-                  name='numberAdults'
-                  type='number'
+                  id="number-adults"
+                  label="Adults"
+                  name="numberAdults"
+                  type="number"
                   defaultValue={1}
                   InputProps={{ inputProps: { min: 1 } }}
                   InputLabelProps={{
@@ -108,9 +105,9 @@ const SearchFlight = () => {
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <Stack spacing={3}>
                     <DesktopDatePicker
-                      label='Departure Date'
-                      className='departureDate'
-                      inputFormat='dd/MM/yyyy'
+                      label="Departure Date"
+                      className="departureDate"
+                      inputFormat="dd/MM/yyyy"
                       value={date}
                       onChange={handleChange}
                       renderInput={(params) => <TextField {...params} />}
@@ -122,9 +119,9 @@ const SearchFlight = () => {
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <Stack spacing={3}>
                     <DesktopDatePicker
-                      label='Return Date'
-                      className='returnDate'
-                      inputFormat='dd/MM/yyyy'
+                      label="Return Date"
+                      className="returnDate"
+                      inputFormat="dd/MM/yyyy"
                       value={date}
                       onChange={handleChange}
                       renderInput={(params) => <TextField {...params} />}
@@ -138,14 +135,14 @@ const SearchFlight = () => {
               mb={2}
               p={1}
               component={(props) => (
-                <Button {...props} type='submit' fullWidth variant='outlined' />
+                <Button {...props} type="submit" fullWidth variant="outlined" />
               )}
             >
               Search Flights
             </Box>
-            <Grid container justifyContent='flex-end'>
+            <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href='#' variant='body2'>
+                <Link href="#" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

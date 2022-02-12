@@ -9,29 +9,31 @@ import { amadeusRouter } from "@/backend/router/amadeus";
 
 // create context based of incoming request
 // set as optional here so it can also be re-used for `getStaticProps()`
-export const createContext = async (
-  opts?: trpcNext.CreateNextContextOptions
-) => {
+export const createContext = async ({
+  req,
+  res,
+}: trpcNext.CreateNextContextOptions) => {
   return {
-    req: opts?.req,
-    // prisma,
+    req,
+    res,
   };
 };
+
 export type Context = trpc.inferAsyncReturnType<typeof createContext>;
 
 export function createRouter() {
   return trpc.router<Context>();
 }
-const router = createRouter()
-  .transformer(superjson)
-  .merge("duffel.", duffelRouter)
-  .merge("amadeus.", amadeusRouter);
 
-export const appRouter = router;
-export type AppRouter = typeof router;
+const appRouter = createRouter()
+  .transformer(superjson)
+  .merge("amadeus.", amadeusRouter);
+// .merge("duffel.", duffelRouter);
+
+export type AppRouter = typeof appRouter;
 
 export default trpcNext.createNextApiHandler({
-  router,
+  router: appRouter,
   createContext,
   // teardown: () => prisma.$disconnect(),
   onError({ error }) {
@@ -39,5 +41,8 @@ export default trpcNext.createNextApiHandler({
       // send to bug reporting
       console.error("Something went wrong", error);
     }
+  },
+  batching: {
+    enabled: true,
   },
 });

@@ -2,22 +2,17 @@ import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
 import { withTRPC } from "@trpc/next";
 import { AppType } from "next/dist/shared/lib/utils";
-import { transformer } from "@/utils/trpc";
-import TRPCContext from "@/components/TRPCContext";
+import superjson from "superjson";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  return (
-    <TRPCContext>
-      <Component {...pageProps} />
-    </TRPCContext>
-  );
+  return <Component {...pageProps} />;
 };
 
 export default withTRPC({
   config() {
     return {
       url: "/api/trpc",
-      // transformer,
+      transformer: superjson,
     };
   },
   ssr: false,
